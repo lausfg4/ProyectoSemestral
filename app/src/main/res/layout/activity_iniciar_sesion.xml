@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registrarse">
+    tools:context=".IniciarSesion">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView3"
         android:layout_width="759dp"
         android:layout_height="946dp"
         android:layout_marginEnd="16dp"
@@ -23,13 +23,13 @@
         app:srcCompat="@drawable/fondobosque" />
 
     <TextView
-        android:id="@+id/linkText2"
+        android:id="@+id/linkText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autoLink="none"
         android:clickable="true"
         android:focusable="true"
-        android:text="@string/underlined_text_account"
+        android:text="@string/underlined_text_Crearaccount"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -40,11 +40,11 @@
         app:layout_constraintVertical_bias="0.934" />
 
     <Button
-        android:id="@+id/btnRegistrarse"
+        android:id="@+id/btnRegistrarse2"
         android:layout_width="138dp"
         android:layout_height="55dp"
         android:backgroundTint="#0C342C"
-        android:text="Registrarse"
+        android:text="Ingresar"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,12 +52,12 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84"
+        app:layout_constraintVertical_bias="0.738"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp" />
 
     <EditText
-        android:id="@+id/editTextCorreo"
+        android:id="@+id/editTextCorreo2"
         android:layout_width="286dp"
         android:layout_height="44dp"
         android:layout_margin="16dp"
@@ -66,7 +66,7 @@
         android:gravity="center_vertical"
         android:inputType="textPersonName"
         android:padding="12dp"
-        android:text="Correo Electrónico"
+        android:text="Correo electrónico"
         android:textColor="#0C342C"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -75,10 +75,10 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
+        app:layout_constraintVertical_bias="0.387" />
 
     <EditText
-        android:id="@+id/editTextContraseña"
+        android:id="@+id/editTextContraseña2"
         android:layout_width="286dp"
         android:layout_height="44dp"
         android:layout_margin="16dp"
@@ -96,31 +96,10 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567" />
-
-    <EditText
-        android:id="@+id/editTextConfirmar"
-        android:layout_width="286dp"
-        android:layout_height="44dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_edittext"
-        android:fontFamily="serif"
-        android:gravity="center_vertical"
-        android:inputType="textPersonName"
-        android:padding="12dp"
-        android:text="Confirmar contraseña"
-        android:textColor="#0C342C"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView6"
         android:layout_width="217dp"
         android:layout_height="186dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,26 +108,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.073"
         app:srcCompat="@drawable/tituloverde" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="286dp"
-        android:layout_height="44dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_edittext"
-        android:fontFamily="serif"
-        android:gravity="center_vertical"
-        android:inputType="textPersonName"
-        android:padding="12dp"
-        android:text="Nombre"
-        android:textColor="#0C342C"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
