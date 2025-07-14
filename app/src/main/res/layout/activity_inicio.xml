@@ -1,0 +1,321 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0C342C"
+    android:orientation="vertical">
+            <!-- ✅ Header -->
+            <LinearLayout
+                android:id="@+id/rglo76kb3a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="#0C342C"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="21dp"
+                android:paddingBottom="30dp">
+
+                <ImageView
+                    android:id="@+id/ry2qfu3gweih"
+                    android:layout_width="67dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/logo" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/rclbi045zn5q"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="Inicio"
+                    android:textColor="#FFFFFF"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/re32hh3fv9yv"
+                    android:layout_width="67dp"
+                    android:layout_height="48dp"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#D0E1DC"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+            <!-- ✅ ¿Quiénes somos? -->
+            <LinearLayout
+                android:id="@+id/rqie1gaatfhi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rdizhllz1uis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Quiénes somos?"
+                    android:textColor="#0C342C"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 📸 Imagen principal -->
+            <ImageView
+                android:id="@+id/rg36gnui2jmw"
+                android:layout_width="match_parent"
+                android:layout_height="262dp"
+                android:layout_marginBottom="32dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/inicioqs" />
+
+            <!-- 📌 Misión -->
+            <LinearLayout
+                android:id="@+id/r8i5ka4j4qep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="28dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:id="@+id/rjdd1mnhfhir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Misión"
+                    android:textColor="#0C342C"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/rr6rkzc9n9yf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Brindar a nuestros visitantes una experiencia segura, educativa y enriquecedora a través de senderos naturales bien conservados, promoviendo el respeto por el medio ambiente, el bienestar físico y mental, y la conexión con la naturaleza."
+                    android:textColor="#0C342C"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ✅ Conoce nuestras actividades -->
+            <LinearLayout
+                android:id="@+id/rap2vgg3d58a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rirr144lzln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="¡Conoce nuestras actividades!"
+                    android:textColor="#0C342C"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!-- 🏷️ Recuadros 2 filas -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- 🏷️ Fila 1 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="13dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="11dp"
+                            android:clickable="false"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Buceo y snorkeling"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="11dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Senderismo"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ciclismo"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 🏷️ Fila 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="63dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="134dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="11dp"
+                            android:backgroundTint="#BCA5A5"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Uso de playas"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="124dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="11dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="85dp"
+                                android:layout_height="wrap_content"
+                                android:text="Cetáceos"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="107dp"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Acampar"
+                                android:textColor="#0C342C"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <!-- ✅ Footer -->
+    <LinearLayout
+        android:id="@+id/r1vhcuzkf8rt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0C342C"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="14dp">
+
+        <ImageView
+            android:id="@+id/rrurse2wkpoc"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/casa" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/rpx4inz2zboq"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/senderosico" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/r6ymall5pj9r"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/salirico" />
+    </LinearLayout>
+</LinearLayout>
