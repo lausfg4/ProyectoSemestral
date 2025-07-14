@@ -3,4 +3,12 @@
     <string name="underlined_text"><u>Inicie sesión aquí</u></string>
     <string name="underlined_text_account"><u>Ya tengo una cuenta</u></string>
     <string name="underlined_text_Crearaccount"><u>Crea una</u></string>
+
+    <string name="importante_texto">
+    <b>Cumpla</b> con las indicaciones recibidas por parte del <b>Guardaparque o personal</b> del área protegida, con esto podrá <b>prevenir y evitar</b> accidentes que generen una situación de <b>riesgo</b> extra a la existente en las instalaciones de salud.
+</string>
+    <string name="inicio">Inicio</string>
+    <string name="todo">TODO</string>
+
+
 </resources>
