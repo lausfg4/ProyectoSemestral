@@ -3,6 +3,7 @@
     <string name="underlined_text"><u>Inicie sesión aquí</u></string>
     <string name="underlined_text_account"><u>Ya tengo una cuenta</u></string>
     <string name="underlined_text_Crearaccount"><u>Crea una</u></string>
+<<<<<<< HEAD
     <string name="camino_de_cruces">Camino de Cruces</string>
     <string name="como_se_entero">¿Cómo se enteró usted de la existencia del AP?</string>
     <string name="que_mas_gusto">¿Qué fue lo que más le gustó?</string>
@@ -20,5 +21,14 @@
         <item>Femenino</item>
         <item>Masculino</item>
     </string-array>
+=======
+
+    <string name="importante_texto">
+    <b>Cumpla</b> con las indicaciones recibidas por parte del <b>Guardaparque o personal</b> del área protegida, con esto podrá <b>prevenir y evitar</b> accidentes que generen una situación de <b>riesgo</b> extra a la existente en las instalaciones de salud.
+</string>
+    <string name="inicio">Inicio</string>
+    <string name="todo">TODO</string>
+
+>>>>>>> 3d5af434b4735778eac97c3a045c50e43f1043a2
 
 </resources>

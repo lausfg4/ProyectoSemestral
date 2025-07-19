@@ -1,0 +1,840 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0C342C"
+    android:orientation="vertical">
+            <!-- ✅ Header -->
+            <LinearLayout
+                android:id="@+id/rglo76kb3a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:background="#0C342C"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="21dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="67dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/logo"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/inicio"
+                    android:textColor="#FFFFFF"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/re32hh3fv9yv"
+                    android:layout_width="67dp"
+                    android:layout_height="48dp"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#D0E1DC"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+            <!-- ✅ ¿Quiénes somos? -->
+            <LinearLayout
+                android:id="@+id/rqie1gaatfhi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rdizhllz1uis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Quiénes somos?"
+                    android:textColor="#0C342C"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 📸 Imagen principal -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="262dp"
+                android:layout_marginBottom="32dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/inicioqs" />
+
+            <!-- 📌 Misión -->
+
+                    <!-- ✅ Conoce nuestras actividades -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="28dp"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="30dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Mision"
+                            android:textColor="#0C342C"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Brindar a nuestros visitantes una experiencia segura, educativa y enriquecedora a través de senderos naturales bien conservados, promoviendo el respeto por el medio ambiente, el bienestar físico y mental, y la conexión con la naturaleza."
+                            android:textColor="#0C342C"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <!-- 🖼️ Icono -->
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/guardabosqueverde"
+                        android:contentDescription="Icono planificacion" />
+
+                        <!-- 📑 Textos -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Planificacion de la Visita"
+                                android:textColor="#0C342C"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Infórmese antes de su visita sobre horarios, áreas abiertas, capacidad, sitios disponibles y normas del área protegida.
+
+"
+                                android:textColor="#0C342C"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rap2vgg3d58a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="36dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/rirr144lzln"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="¡Conoce nuestras actividades!"
+                            android:textColor="#0C342C"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <!-- 🏷️ Recuadros 2 filas -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- 🏷️ Fila 1 -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="13dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="11dp"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="false"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Buceo y snorkeling"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="11dp"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Senderismo"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Ciclismo"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- 🏷️ Fila 2 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="63dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="155dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="11dp"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Uso de playas"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="124dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="11dp"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="85dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Cetáceos"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="107dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_edittext"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="12dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Acampar"
+                                        android:textColor="#0C342C"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="8dp">
+
+                            <ImageView
+                                android:layout_width="120dp"
+                                android:layout_height="80dp"
+                                android:layout_marginEnd="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/carruinicio1"
+                                />
+
+                            <ImageView
+                                android:layout_width="120dp"
+                                android:layout_height="80dp"
+                                android:layout_marginEnd="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/carruinicio2"
+                                />
+
+                            <ImageView
+                                android:layout_width="120dp"
+                                android:layout_height="80dp"
+                                android:layout_marginEnd="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/carruinicio3"
+                                />
+
+                            <ImageView
+                                android:layout_width="120dp"
+                                android:layout_height="80dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/parquenacionalcamino"
+                                />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <!-- 🖼️ Icono -->
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/climaverde"
+                            android:contentDescription="Icono misión" />
+
+                        <!-- 📑 Textos -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Misión"
+                                android:textColor="#0C342C"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Respete los horarios, rutas y límites de visitantes. No salga del sendero marcado. Senderos y recorridos se cierran si hay mal clima."
+                                android:textColor="#0C342C"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!-- Medidas -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="36dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <!-- 📝 Título -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:text="MEDIDAS"
+                            android:textColor="#0C342C"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <!-- 📦 Grid de recuadros -->
+                        <GridLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:columnCount="2"
+                            android:rowSpacing="16dp"
+                            android:columnSpacing="16dp">
+
+                            <!-- 🏷️ Recuadro 1 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/hospitalico"
+                                    android:contentDescription="Icono Salud" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cumpla protocolos de salud"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- 🏷️ Recuadro 2 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/hospitalico"
+                                    android:contentDescription="Icono Basura" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tire la basura en su sitio"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- 🏷️ Recuadro 3 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/sprayico"
+                                    android:contentDescription="Icono Desinfectar" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Desinfecte antes de usar"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- 🏷️ Recuadro 4 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/bocinaico"
+                                    android:contentDescription="Icono Ruidos" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Evite ruidos que afecten la fauna"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- 🏷️ Recuadro 5 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/aprietamanosico"
+                                    android:contentDescription="Icono Respetar" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Respete a otros"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- 🏷️ Recuadro 6 -->
+                            <LinearLayout
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_bg_shadow"
+                                android:orientation="horizontal"
+                                android:padding="14dp"
+                                android:elevation="4dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/discapitado"
+                                    android:contentDescription="Icono Discapacidad" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Menores y personas con discapacidad deben ir acompañados"
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </GridLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/raunded_botones"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- 📝 Título -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PROHIBICIONES"
+                            android:textColor="#0C342C"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <!-- 📋 Lista con íconos a la derecha -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- Item 1 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No introduzca ni extraiga fauna o flora."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- Item 2 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Prohibido fumar y consumir."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/nofumarico"
+                                    android:contentDescription="Icono fumar" />
+                            </LinearLayout>
+
+                            <!-- Item 3 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No se permiten mascotas."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- Item 4 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No perturbe ni se acerque a la fauna."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/nomascotasico"
+                                    android:contentDescription="Icono no acercar" />
+                            </LinearLayout>
+
+                            <!-- Item 5 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No alimente a los animales silvestres."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <!-- Item 6 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No recolecte ni dañe recursos naturales o culturales."
+                                    android:textColor="#0C342C"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/pericoico"
+                                    android:contentDescription="Icono culturales" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- ✅ Conoce nuestras actividades -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/rounded_bg"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <!-- 📑 Contenedor de textos -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- 📝 Título -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="IMPORTANTE"
+                                android:textColor="#0C342C"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="8dp" />
+
+                            <!-- 📄 Texto con negritas parciales -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#0C342C"
+                                android:textSize="14sp"
+                                android:lineSpacingExtra="2dp"
+                                android:textIsSelectable="false"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/importante_texto" />
+                        </LinearLayout>
+
+                        <!-- ⚠️ Icono -->
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/advertenciaicopng"
+                            android:contentDescription="Icono de alerta"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+
+    </ScrollView>
+    <!-- ✅ Footer -->
+    <LinearLayout
+        android:id="@+id/r1vhcuzkf8rt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0C342C"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="14dp">
+
+        <ImageView
+            android:id="@+id/rrurse2wkpoc"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/casa" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/rpx4inz2zboq"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/senderosico" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/r6ymall5pj9r"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/salirico" />
+    </LinearLayout>
+</LinearLayout>
