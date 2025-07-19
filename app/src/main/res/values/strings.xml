@@ -3,4 +3,22 @@
     <string name="underlined_text"><u>Inicie sesión aquí</u></string>
     <string name="underlined_text_account"><u>Ya tengo una cuenta</u></string>
     <string name="underlined_text_Crearaccount"><u>Crea una</u></string>
+    <string name="camino_de_cruces">Camino de Cruces</string>
+    <string name="como_se_entero">¿Cómo se enteró usted de la existencia del AP?</string>
+    <string name="que_mas_gusto">¿Qué fue lo que más le gustó?</string>
+    <string name="que_menos_gusto">¿Qué fue lo que menos le gustó?</string>
+    <string name="que_recomendaria">¿Qué recomendaría usted?</string>
+    <string name="espera_volver">¿Espera volver al parque?</string>
+    <string name="porque">¿Por qué?</string>
+    <string name="comentarios_sugerencias">Comentarios y sugerencias</string>
+    <string name="hint_respuesta">Escriba su respuesta aquí...</string>
+    <string name="hint_comentarios">Escriba aquí comentarios adicionales...</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+
+    <string-array name="spinner_items">
+        <item>Femenino</item>
+        <item>Masculino</item>
+    </string-array>
+
 </resources>
