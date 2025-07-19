@@ -123,7 +123,7 @@
                             android:text="Brindar a nuestros visitantes una experiencia segura, educativa y enriquecedora a través de senderos naturales bien conservados, promoviendo el respeto por el medio ambiente, el bienestar físico y mental, y la conexión con la naturaleza."
                             android:textColor="#0C342C"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -328,7 +328,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        android:scrollbars="none">
+                        android:scrollbars="none"
+                        tools:ignore="SpeakableTextPresentCheck">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -341,31 +342,27 @@
                                 android:layout_height="80dp"
                                 android:layout_marginEnd="8dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/carruinicio1"
-                                />
+                                android:src="@drawable/carruinicio1" />
 
                             <ImageView
                                 android:layout_width="120dp"
                                 android:layout_height="80dp"
                                 android:layout_marginEnd="8dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/carruinicio2"
-                                />
+                                android:src="@drawable/carruinicio2" />
 
                             <ImageView
                                 android:layout_width="120dp"
                                 android:layout_height="80dp"
                                 android:layout_marginEnd="8dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/carruinicio3"
-                                />
+                                android:src="@drawable/carruinicio3" />
 
                             <ImageView
                                 android:layout_width="120dp"
                                 android:layout_height="80dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/parquenacionalcamino"
-                                />
+                                android:src="@drawable/parquenacionalcamino" />
                         </LinearLayout>
                     </HorizontalScrollView>
 

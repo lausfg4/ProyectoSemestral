@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_bg_shadow"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:elevation="2dp"
+    android:layout_marginBottom="12dp">
+
+    <!-- 🖼 Imagen del sendero -->
+    <ImageView
+        android:id="@+id/sendero_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sendero_placeholder"
+        android:contentDescription="Imagen del sendero" />
+
+    <!-- 📄 Información -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:id="@+id/sendero_nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Sendero"
+            android:textColor="#0C342C"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sendero_detalles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dificultad: Media\nRecorrido: 3km\nActividades: Senderismo, Observación"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- ⭐ RatingBar y número de reseñas -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical">
+
+            <RatingBar
+                android:id="@+id/sendero_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:isIndicator="true"
+                android:rating="4.5"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/sendero_resenas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(23 reseñas)"
+                android:textColor="#0C342C"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sendero_ver_mas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver más detalles..."
+            android:textColor="#0C342C"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ProyectoSemestral"
         tools:targetApi="31">
         <activity
+            android:name=".senderocamaron"
+            android:exported="false" />
+        <activity
+            android:name=".Senderos"
+            android:exported="false" />
+        <activity
             android:name=".Inicio"
             android:exported="false" />
         <activity
