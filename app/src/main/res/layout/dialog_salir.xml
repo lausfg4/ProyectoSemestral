@@ -1,0 +1,51 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_bg"
+    android:padding="24dp">
+
+    <!-- Botón cerrar (X en la esquina superior derecha) -->
+    <ImageView
+        android:id="@+id/btn_cerrar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/icox"
+        android:contentDescription="Cerrar" />
+
+    <!-- Icono alerta -->
+    <ImageView
+        android:id="@+id/icon_alerta"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/alertasalir"
+        android:contentDescription="Alerta" />
+
+    <!-- Texto mensaje -->
+    <TextView
+        android:id="@+id/texto_mensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/icon_alerta"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="¿Está seguro que desea salir?"
+        android:textColor="#0C342C"
+        android:textSize="18sp" />
+
+    <!-- Botón Salir -->
+    <Button
+        android:id="@+id/btn_salir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/texto_mensaje"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#0C342C"
+        android:text="Salir"
+        android:textColor="#FFFFFF" />
+</RelativeLayout>
+
