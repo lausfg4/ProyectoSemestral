@@ -36,9 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Acción al pulsar EXPLORAR
         btnExplorar.setOnClickListener(view -> {
-            // Aquí iría la pantalla de inicio de usuario
-           // Intent intent = new Intent(MainActivity.this, PantallaInicio.class);
-           // startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, Inicio.class);
+            startActivity(intent);
         });
 
         // Acción al pulsar "Inicie sesión aquí"

@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0C342C"
@@ -432,14 +433,12 @@
                         <GridLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:columnCount="2"
-                            android:rowSpacing="16dp"
-                            android:columnSpacing="16dp">
+                            android:columnCount="2">
 
-                            <!-- 🏷️ Recuadro 1 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -461,10 +460,10 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <!-- 🏷️ Recuadro 2 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -486,10 +485,10 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <!-- 🏷️ Recuadro 3 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -511,10 +510,10 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <!-- 🏷️ Recuadro 4 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -536,10 +535,10 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <!-- 🏷️ Recuadro 5 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -561,10 +560,10 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
 
-                            <!-- 🏷️ Recuadro 6 -->
                             <LinearLayout
                                 android:layout_width="170dp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/rounded_bg_shadow"
                                 android:orientation="horizontal"
                                 android:padding="14dp"
@@ -586,6 +585,7 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </GridLayout>
+
                     </LinearLayout>
 
 
