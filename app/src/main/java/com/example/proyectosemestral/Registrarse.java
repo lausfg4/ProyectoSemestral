@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Registrarse extends AppCompatActivity {
 
-    EditText editTextNombre, editTextCorreo, editTextContraseña, editTextConfirmarContraseña;
+    EditText editTextNombre, editTextCorreo, editTextContraseña, editTextConfirmarContraseña,editTextApellido;
     Button btnRegistrarse;
     TextView linkTextVolver;
 
@@ -39,15 +39,17 @@ public class Registrarse extends AppCompatActivity {
         editTextConfirmarContraseña = findViewById(R.id.editTextConfirmar);
         btnRegistrarse = findViewById(R.id.btnRegistrarse);
         linkTextVolver = findViewById(R.id.linkText2);
+        editTextApellido = findViewById(R.id.editTextApellido);
 
         // Acción del botón Registrar
         btnRegistrarse.setOnClickListener(view -> {
             String nombre = editTextNombre.getText().toString().trim();
+            String apellido = editTextApellido.getText().toString().trim();
             String correo = editTextCorreo.getText().toString().trim();
             String contraseña = editTextContraseña.getText().toString().trim();
             String confirmarContraseña = editTextConfirmarContraseña.getText().toString().trim();
 
-            if (nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty()) {
+            if (nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty() || apellido.isEmpty()) {
                 Toast.makeText(Registrarse.this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }

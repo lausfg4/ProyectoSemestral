@@ -138,6 +138,7 @@
 
                         <!-- 🖼️ Icono -->
                         <ImageView
+                            android:id="@+id/inicio"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginEnd="12dp"
@@ -160,6 +161,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/icsenderos"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -828,7 +830,7 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/r6ymall5pj9r"
+            android:id="@+id/salir"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitXY"
