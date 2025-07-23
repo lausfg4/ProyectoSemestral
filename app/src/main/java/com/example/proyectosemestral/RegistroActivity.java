@@ -88,7 +88,7 @@ public class RegistroActivity extends AppCompatActivity {
         });
 
         btnDashboard.setOnClickListener(v -> {
-            Intent intent = new Intent(RegistroActivity.this, com.example.semestral.DashboardActivity.class);
+            Intent intent = new Intent(RegistroActivity.this, com.example.proyectosemestral.DashboardActivity.class);
             startActivity(intent);
         });
 

@@ -1,6 +1,7 @@
 package com.example.proyectosemestral;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,9 @@ public class Encuesta extends AppCompatActivity {
         editTextNoGusto = findViewById(R.id.EditTextNoGusto);
         editTextRecomendar = findViewById(R.id.EditTextRecomendar);
         editTextComentarios = findViewById(R.id.EditTextComentarios);
+
+        ImageView btnregresar = findViewById(R.id.regresar);
+        btnregresar.setOnClickListener(v -> startActivity(new Intent(this, EncuestaActivity.class)));
 
         // Inicializar Spinners
         spinnerActividades = findViewById(R.id.SpinnerAps); // Ajusta si hay otro Spinner

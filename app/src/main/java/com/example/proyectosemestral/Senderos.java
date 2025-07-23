@@ -1,6 +1,7 @@
 package com.example.proyectosemestral;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +36,13 @@ public class Senderos extends AppCompatActivity {
         LinearLayout senderosContainer = findViewById(R.id.senderos_container);
 
         // 📦 Datos (de prueba - luego vendrán del backend)
-        int[] imagenes = {
+       // int[] imagenes = {
                 //R.drawable.sendero_camaron,
                 //R.drawable.sendero_cruces,
                //R.drawable.sendero_pescador,
                 //R.drawable.sendero_quetzal,
                 //R.drawable.sendero_historia
-        };
+       // };
 
         String[] nombres = {
                 "Sendero Camarón",
@@ -74,7 +75,7 @@ public class Senderos extends AppCompatActivity {
             RatingBar ratingBar = card.findViewById(R.id.sendero_rating);
             TextView resenasView = card.findViewById(R.id.sendero_resenas);
 
-            imageView.setImageResource(imagenes[i]);
+          //  imageView.setImageResource(imagenes[i]);
             nombreView.setText(nombres[i]);
             detallesView.setText(detalles[i]);
             ratingBar.setRating(estrellas[i]); // Valor dinámico
@@ -86,6 +87,12 @@ public class Senderos extends AppCompatActivity {
         // ✅ Botón salir (footer)
         ImageButton btnSalir = findViewById(R.id.btn_salir);
         btnSalir.setOnClickListener(v -> mostrarDialogoSalir());
+
+        ImageView InicioBtn = findViewById(R.id.btn_incio);
+        InicioBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Senderos.this, Inicio.class);
+            startActivity(intent);
+        });
     }
 
     // 🔥 Método para mostrar el diálogo personalizado
