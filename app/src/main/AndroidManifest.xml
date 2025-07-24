@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSemestral"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SenderoComentarios"
+            android:exported="false" />
         <activity
             android:name=".RegistroVisitaActivity2"
             android:exported="false" />
