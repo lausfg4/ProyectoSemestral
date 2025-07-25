@@ -1,5 +1,6 @@
 package com.example.proyectosemestral;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,21 +54,34 @@ public class RegistroVisitaActivity extends AppCompatActivity {
             String identificacion = etIdentificacion.getText().toString().trim();
 
             if (identificacion.isEmpty()) {
-                Toast.makeText(this, "Ingrese una cédula válida", Toast.LENGTH_SHORT).show();
+                mostrarAlerta("¡Ingrese su identificación!", R.drawable.exclamation, "Volver", null);
                 return;
             }
 
-            // Verifica si existe en la base
-            if (baseUsuarios.containsKey(identificacion)) {
-                String nombreUsuario = baseUsuarios.get(identificacion);
+            String url = "https://camino-cruces-backend-production.up.railway.app/api/visitante/cedula/" + identificacion + "/";
 
-                // Enviar nombre al siguiente Activity
-                Intent intent = new Intent(RegistroVisitaActivity.this, RegistroVisitaActivity2.class);
-                intent.putExtra("nombreUsuario", nombreUsuario);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Cédula no registrada", Toast.LENGTH_SHORT).show();
-            }
+            RequestQueue queue = Volley.newRequestQueue(RegistroVisitaActivity.this);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        // Si la cédula existe, extraemos el nombre
+                        String nombreUsuario = response.optString("nombre_visitante", "Visitante");
+
+                        // Enviar nombre e ID del visitante al siguiente Activity
+                        Intent intent = new Intent(RegistroVisitaActivity.this, RegistroVisitaActivity2.class);
+                        intent.putExtra("nombreUsuario", nombreUsuario);
+                        intent.putExtra("visitante_id", response.optInt("id")); // si lo necesitas más adelante
+                        startActivity(intent);
+                    },
+                    error -> {
+                        mostrarAlerta("¡No estás registrado!", R.drawable.exclamation, "Registrarse", () -> {
+                            Intent intent = new Intent(RegistroVisitaActivity.this, RegistroActivity.class);
+                            startActivity(intent);
+                        });
+
+                    });
+
+            queue.add(request);
         });
 
         // Scroll automático de imágenes
@@ -96,5 +120,29 @@ public class RegistroVisitaActivity extends AppCompatActivity {
         baseUsuarios.put("3-456-789", "Carlos Ruiz");
         // Puedes agregar más aquí
     }
+
+    private void mostrarAlerta(String mensaje, int icono, String textoBoton, Runnable onClick) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.alert_custom, null);
+
+        TextView alertMessage = view.findViewById(R.id.alert_message);
+        ImageView alertIcon = view.findViewById(R.id.alert_icon);
+        Button alertButton = view.findViewById(R.id.alert_button);
+
+        alertMessage.setText(mensaje);
+        alertIcon.setImageResource(icono);
+        alertButton.setText(textoBoton);
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        alertButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (onClick != null) onClick.run();
+        });
+
+    }
+
 }
 

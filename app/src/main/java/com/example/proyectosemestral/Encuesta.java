@@ -10,12 +10,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Encuesta extends AppCompatActivity {
 
@@ -84,10 +95,81 @@ public class Encuesta extends AppCompatActivity {
         btnEnviar.setOnClickListener(v -> {
             if (camposEstanVacios()) {
                 mostrarAlerta("¡Campos vacíos por llenar!", R.drawable.exclamation, "Volver");
-            } else {
-                mostrarAlerta("¡Gracias por su tiempo!\nEsto nos ayuda a mejorar", R.drawable.ic_check, "Cerrar");
+                return;
             }
+
+            // Recolectar datos
+            String sexo = editTextSexo.getText().toString().trim();
+            String ocupacion = editTextOcupacion.getText().toString().trim();
+            String estudios = editTextEstudios.getText().toString().trim();
+            String visitaRealiza = getVisitaRealizaSeleccionada();
+            String actividad = spinnerActividades.getSelectedItem().toString();
+            String planeaVolver = checkBoxPlaneaSi.isChecked() ? "Sí" : "No";
+            String porque = editTextOtros.getText().toString().trim();
+            String comoSeEntero = spinnerExAps.getSelectedItem().toString();
+            String meGusto = editTextGusto.getText().toString().trim();
+            String noMeGusto = editTextNoGusto.getText().toString().trim();
+            String recomendar = editTextRecomendar.getText().toString().trim();
+            String sugerencias = editTextComentarios.getText().toString().trim();
+
+            // Obtener ID de visita
+            int idVisita = getIntent().getIntExtra("id_visita", -1);
+            if (idVisita == -1) {
+                mostrarAlerta("No se recibió ID de la visita", R.drawable.exclamation, "Cerrar");
+                return;
+            }
+
+            // Crear JSON para formulario
+            JSONObject formulario = new JSONObject();
+            try {
+                formulario.put("sexo", sexo);
+                formulario.put("ocupacion", ocupacion);
+                formulario.put("estudios", estudios);
+                formulario.put("visita_realiza", visitaRealiza);
+                formulario.put("actividad_experimentada", actividad);
+                formulario.put("planea_volver", planeaVolver);
+                formulario.put("porque", porque);
+                formulario.put("como_se_entero", comoSeEntero);
+                formulario.put("me_gusto", meGusto);
+                formulario.put("no_me_gusto", noMeGusto);
+                formulario.put("recomendaria", recomendar);
+                formulario.put("sugerencias", sugerencias);
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAlerta("Error al preparar datos", R.drawable.exclamation, "Cerrar");
+                return;
+            }
+
+            // Crear JSON principal
+            JSONObject jsonBody = new JSONObject();
+            try {
+                jsonBody.put("id_visita", idVisita);
+                jsonBody.put("formulario", formulario);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            String url = "https://camino-cruces-backend-production.up.railway.app/api/encuestas/registrar/";
+
+            RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(Encuesta.this);
+
+            com.android.volley.toolbox.JsonObjectRequest request = new com.android.volley.toolbox.JsonObjectRequest(
+                    com.android.volley.Request.Method.POST,
+                    url,
+                    jsonBody,
+                    response -> mostrarAlerta("¡Gracias por su tiempo!\nEsto nos ayuda a mejorar", R.drawable.ic_check, "Cerrar"),
+                    error -> {
+                        String msg = "Error al registrar encuesta";
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            msg = new String(error.networkResponse.data);
+                        }
+                        mostrarAlerta(msg, R.drawable.exclamation, "Cerrar");
+                    });
+
+            queue.add(request);
         });
+
     }
     private void actualizarEstadoEditTextOtros() {
         if (checkBoxSolo.isChecked() || checkBoxFamiliares.isChecked() || checkBoxAmigos.isChecked()) {
@@ -96,6 +178,13 @@ public class Encuesta extends AppCompatActivity {
         } else {
             editTextOtros.setEnabled(true); // Activa el campo
         }
+    }
+    private String getVisitaRealizaSeleccionada() {
+        List<String> opciones = new ArrayList<>();
+        if (checkBoxSolo.isChecked()) opciones.add("solo");
+        if (checkBoxFamiliares.isChecked()) opciones.add("con familiares");
+        if (checkBoxAmigos.isChecked()) opciones.add("con amigos");
+        return opciones.isEmpty() ? "no especificado" : String.join(", ", opciones);
     }
 
     private boolean camposEstanVacios() {
