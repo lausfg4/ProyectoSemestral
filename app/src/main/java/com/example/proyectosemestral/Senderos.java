@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Senderos extends AppCompatActivity {
+
+    private LinearLayout senderosContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,59 +43,10 @@ public class Senderos extends AppCompatActivity {
             return insets;
         });
 
-        // 🔥 Contenedor de senderos
-        LinearLayout senderosContainer = findViewById(R.id.senderos_container);
+        senderosContainer = findViewById(R.id.senderos_container);
 
-        // 📦 Datos (de prueba - luego vendrán del backend)
-       // int[] imagenes = {
-                //R.drawable.sendero_camaron,
-                //R.drawable.sendero_cruces,
-               //R.drawable.sendero_pescador,
-                //R.drawable.sendero_quetzal,
-                //R.drawable.sendero_historia
-       // };
+        cargarSenderosDesdeAPI();
 
-        String[] nombres = {
-                "Sendero Camarón",
-                "Sendero Camino de Cruces",
-                "Sendero El Pescador",
-                "Sendero Quetzal",
-                "Sendero Histórico"
-        };
-
-        String[] detalles = {
-                "Dificultad: Media\nRecorrido: 3km\nActividades: Senderismo, Aves",
-                "Dificultad: Alta\nRecorrido: 5km\nActividades: Ciclismo, Historia",
-                "Dificultad: Baja\nRecorrido: 2km\nActividades: Fauna y flora",
-                "Dificultad: Media\nRecorrido: 4km\nActividades: Senderismo",
-                "Dificultad: Alta\nRecorrido: 6km\nActividades: Historia y cultura"
-        };
-
-        float[] estrellas = {4.5f, 4.0f, 5.0f, 3.5f, 3.0f}; // Valoraciones promedio
-        int[] resenas = {23, 19, 15, 12, 9}; // Cantidad de reseñas
-
-        // 💥 Inflar y llenar cada card
-        LayoutInflater inflater = LayoutInflater.from(this);
-
-        for (int i = 0; i < nombres.length; i++) {
-            View card = inflater.inflate(R.layout.sendero_card, senderosContainer, false);
-
-            ImageView imageView = card.findViewById(R.id.sendero_image);
-            TextView nombreView = card.findViewById(R.id.sendero_nombre);
-            TextView detallesView = card.findViewById(R.id.sendero_detalles);
-            RatingBar ratingBar = card.findViewById(R.id.sendero_rating);
-            TextView resenasView = card.findViewById(R.id.sendero_resenas);
-
-          //  imageView.setImageResource(imagenes[i]);
-            nombreView.setText(nombres[i]);
-            detallesView.setText(detalles[i]);
-            ratingBar.setRating(estrellas[i]); // Valor dinámico
-            resenasView.setText("(" + resenas[i] + " reseñas)");
-
-            senderosContainer.addView(card);
-        }
-
-        // ✅ Botón salir (footer)
         ImageButton btnSalir = findViewById(R.id.btn_salir);
         btnSalir.setOnClickListener(v -> mostrarDialogoSalir());
 
@@ -95,7 +57,75 @@ public class Senderos extends AppCompatActivity {
         });
     }
 
-    // 🔥 Método para mostrar el diálogo personalizado
+    private void cargarSenderosDesdeAPI() {
+        String url = "https://camino-cruces-backend-production.up.railway.app/api/senderos/";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                this::mostrarSenderos,
+                error -> Toast.makeText(this, "❌ Error al cargar senderos", Toast.LENGTH_SHORT).show()
+        );
+
+        queue.add(request);
+    }
+
+    private void mostrarSenderos(JSONArray response) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for (int i = 0; i < response.length(); i++) {
+            try {
+                JSONObject sendero = response.getJSONObject(i);
+                int id = sendero.getInt("id");
+                String nombre = sendero.getString("nombre_sendero");
+                String distancia = sendero.getString("distancia");
+                String dificultad = sendero.getString("dificultad");
+                String descripcion = "Distancia: " + distancia + " km\nDificultad: " + dificultad;
+
+
+                View card = inflater.inflate(R.layout.sendero_card, senderosContainer, false);
+
+                ImageView imageView = card.findViewById(R.id.sendero_image);
+                TextView nombreView = card.findViewById(R.id.sendero_nombre);
+                TextView detallesView = card.findViewById(R.id.sendero_detalles);
+                RatingBar ratingBar = card.findViewById(R.id.sendero_rating);
+                TextView resenasView = card.findViewById(R.id.sendero_resenas);
+                TextView verMasView = card.findViewById(R.id.sendero_ver_mas);
+
+                // Asignar imagen local según nombre
+                int imagenRes = obtenerImagenPorNombre(nombre);
+                imageView.setImageResource(imagenRes);
+
+                nombreView.setText(nombre);
+                detallesView.setText(descripcion);
+                ratingBar.setRating(0f);
+                resenasView.setText(""); // opcional
+
+                verMasView.setOnClickListener(v -> {
+                    Intent intent = new Intent(Senderos.this, SenderoComentarios.class);
+                    intent.putExtra("sendero_id", id);
+                    intent.putExtra("sendero_nombre", nombre);
+                    startActivity(intent);
+                });
+
+                senderosContainer.addView(card);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Devuelve imagen local según el nombre del sendero
+    private int obtenerImagenPorNombre(String nombre) {
+        nombre = nombre.toLowerCase();
+        if (nombre.contains("camaron")) return R.drawable.senderoscamaron;
+        if (nombre.contains("cruces")) return R.drawable.senderoscaminocruces;
+        if (nombre.contains("ciclovia")) return R.drawable.senderosciclovia;
+        if (nombre.contains("pescador")) return R.drawable.senderoselpescador;
+        if (nombre.contains("buho")) return R.drawable.senderosbuhodeanteojos;
+        return R.drawable.logo; // imagen por defecto
+    }
+
     private void mostrarDialogoSalir() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_salir, null);
@@ -106,15 +136,13 @@ public class Senderos extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        // Botón cerrar (icono X)
         ImageView btnCerrar = dialogView.findViewById(R.id.btn_cerrar);
         btnCerrar.setOnClickListener(view -> alertDialog.dismiss());
 
-        // Botón "Salir" en el popup
         Button btnConfirmarSalir = dialogView.findViewById(R.id.btn_salir);
         btnConfirmarSalir.setOnClickListener(view -> {
             alertDialog.dismiss();
-            finishAffinity(); // Cierra la app
+            finishAffinity();
         });
     }
 }

@@ -59,7 +59,11 @@ public class Inicio extends AppCompatActivity {
         Button btnConfirmarSalir = dialogView.findViewById(R.id.btn_salir);
         btnConfirmarSalir.setOnClickListener(view -> {
             alertDialog.dismiss();
-            finishAffinity(); // Cierra completamente la app
+
+            // 🔁 Volver a MainActivity y limpiar el historial
+            Intent intent = new Intent(Inicio.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
     }
 }

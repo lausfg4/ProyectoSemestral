@@ -14,6 +14,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
 public class Registrarse extends AppCompatActivity {
 
     EditText editTextNombre, editTextCorreo, editTextContraseña, editTextConfirmarContraseña,editTextApellido;
@@ -60,11 +69,38 @@ public class Registrarse extends AppCompatActivity {
             }
 
             // Aquí luego se puede hacer la petición al API para registrar al admin
+            String url = "https://camino-cruces-backend-production.up.railway.app/api/registro/";
 
-            Toast.makeText(Registrarse.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Registrarse.this, IniciarSesion.class);
-            startActivity(intent);
-            finish();
+            RequestQueue queue = Volley.newRequestQueue(Registrarse.this);
+
+            JSONObject jsonBody = new JSONObject();
+            try {
+                jsonBody.put("email", correo);
+                jsonBody.put("nombre", nombre);
+                jsonBody.put("apellido", apellido);
+                jsonBody.put("contraseña", contraseña);
+                jsonBody.put("rol", "user"); // Puedes omitirlo si ya tienes valor por defecto
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                    response -> {
+                        Toast.makeText(Registrarse.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Registrarse.this, IniciarSesion.class);
+                        startActivity(intent);
+                        finish();
+                    },
+                    error -> {
+                        String msg = "Error al registrar";
+                        if (error.networkResponse != null && error.networkResponse.statusCode == 400) {
+                            msg = "Correo ya registrado o datos inválidos";
+                        }
+                        Toast.makeText(Registrarse.this, msg, Toast.LENGTH_LONG).show();
+                    }
+            );
+            queue.add(request);
         });
 
         // Acción del link “Ya tengo una cuenta”
