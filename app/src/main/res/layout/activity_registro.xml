@@ -190,6 +190,43 @@
             android:padding="12dp"
             android:inputType="number" />
 
+        <!-- Tipo de Visitante -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:text="Tipo de visitante:"
+            android:textColor="#1C3B2D"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerEdadTipo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_background"
+            android:padding="12dp" />
+
+        <!-- Género -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:text="Género:"
+            android:textColor="#1C3B2D"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerGenero"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rounded_background"
+            android:padding="12dp" />
+
+
         <!-- Teléfono -->
         <TextView
             android:layout_width="match_parent"
