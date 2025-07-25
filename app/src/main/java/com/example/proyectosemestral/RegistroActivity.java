@@ -129,7 +129,7 @@ public class RegistroActivity extends AppCompatActivity {
             }
 
             // 🟢 Aquí empieza la preparación y envío de la petición
-            String url = "https://camino-cruces-backend-production.up.railway.app/api/registrar_visitante_y_visita/";
+            String url = "https://camino-cruces-backend-production.up.railway.app/registrar_visitante_y_visita/";
 
             RequestQueue queue = Volley.newRequestQueue(RegistroActivity.this);
 

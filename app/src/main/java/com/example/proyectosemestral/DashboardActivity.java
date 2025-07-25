@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.VolleyError;
 
@@ -26,6 +27,8 @@ import org.json.JSONObject;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -47,7 +50,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Estadísticas superiores
         TextView txtVisitantesHoy = findViewById(R.id.txtVisitantesHoy);
-        TextView txtEncuestaPromedio = findViewById(R.id.txtEncuestaPromedio);
         TextView txtEncuestaCompletadas = findViewById(R.id.txtEncuestaCompletadas);
 
         // Navegación de botones
@@ -192,6 +194,60 @@ public class DashboardActivity extends AppCompatActivity {
         );
 
         queueSenderos.add(requestSenderos);
+
+        // -------------------------
+        // Calificación Promedio General
+        // -------------------------
+        TextView txtCalificacionPromedio = findViewById(R.id.txtCalificacionPromedio); // Asegúrate de tener este TextView en el XML
+
+        String urlSenderosVal = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/visitantes-por-sendero/";
+        RequestQueue queueVal = Volley.newRequestQueue(this);
+
+        JsonArrayRequest requestSenderosVal = new JsonArrayRequest(
+                Request.Method.GET, urlSenderosVal, null,
+                response -> {
+                    try {
+                        int totalSenderos = response.length();
+                        final double[] sumaValoraciones = {0.0};
+                        final int[] conteo = {0};
+
+                        for (int i = 0; i < totalSenderos; i++) {
+                            JSONObject obj = response.getJSONObject(i);
+                            int senderoId = obj.getInt("id"); // IMPORTANTE: asegúrate que el backend devuelve 'id'
+
+                            String urlValoracion = "https://camino-cruces-backend-production.up.railway.app/api/valoracion-promedio/" + senderoId + "/";
+                            JsonObjectRequest requestValoracion = new JsonObjectRequest(
+                                    Request.Method.GET, urlValoracion, null,
+                                    valoracionResponse -> {
+                                        try {
+                                            double promedio = valoracionResponse.getDouble("valoracion_promedio");
+                                            sumaValoraciones[0] += promedio;
+                                            conteo[0]++;
+
+                                            if (conteo[0] == totalSenderos) {
+                                                double promedioGeneral = sumaValoraciones[0] / conteo[0];
+                                                txtCalificacionPromedio.setText(String.format(Locale.US, "%.1f/5", promedioGeneral));
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    },
+                                    error -> error.printStackTrace()
+                            );
+
+                            queueVal.add(requestValoracion);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> error.printStackTrace()
+        );
+
+        queueVal.add(requestSenderosVal);
+
 
         cargarVisitasRecientes();
     }
