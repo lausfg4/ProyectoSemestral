@@ -101,11 +101,31 @@ public class Senderos extends AppCompatActivity {
                 resenasView.setText(""); // opcional
 
                 verMasView.setOnClickListener(v -> {
-                    Intent intent = new Intent(Senderos.this, SenderoComentarios.class);
-                    intent.putExtra("sendero_id", id);
-                    intent.putExtra("sendero_nombre", nombre);
-                    startActivity(intent);
+                    Intent intent = null;
+                    String nombreLower = nombre.toLowerCase();
+
+                    if (nombreLower.contains("camarón") || nombreLower.contains("camaron")) {
+                        intent = new Intent(Senderos.this, senderocamaron.class);
+                    } else if (nombreLower.contains("cruces")) {
+                        intent = new Intent(Senderos.this, senderoCaminoDeCruces.class);
+                    } else if (nombreLower.contains("pescador")) {
+                        intent = new Intent(Senderos.this, senderoElPescador.class);
+                    } else if (nombreLower.contains("buho") || nombreLower.contains("búho")) {
+                        intent = new Intent(Senderos.this, senderoBuhoDeAnteojos.class);
+                    } else if (nombreLower.contains("ciclovia") || nombreLower.contains("ciclovía")) {
+                        intent = new Intent(Senderos.this, senderoCiclovia.class);
+                    }
+
+                    if (intent != null) {
+                        intent.putExtra("sendero_id", id);
+                        intent.putExtra("sendero_nombre", nombre);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "No se pudo encontrar la pantalla del sendero", Toast.LENGTH_SHORT).show();
+                    }
                 });
+
+
 
                 senderosContainer.addView(card);
 
