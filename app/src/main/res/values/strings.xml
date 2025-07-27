@@ -31,4 +31,5 @@
     <string name="visitantes_icon">Visitantes</string>
     <string name="calificacion_icon">Calificación</string>
     <string name="encuesta_icon">Encuesta</string>
+    <string name="vista_previa_de_imagen">Vista previa de imagen</string>
 </resources>

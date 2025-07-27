@@ -38,6 +38,7 @@
         android:layout_height="59dp"
         android:backgroundTint="#0C342C"
         android:text="EXPLORAR"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
