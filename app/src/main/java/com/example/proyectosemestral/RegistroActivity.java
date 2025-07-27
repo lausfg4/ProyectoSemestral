@@ -69,7 +69,7 @@ public class RegistroActivity extends AppCompatActivity {
         spinnerPais.setAdapter(adapterPaises);
 
         // Datos fijos para senderos y motivos
-        String[] senderos = {"Sendero Camarón",
+        String[] senderos = {"Selecione un Sendero","Sendero Camarón",
                 "Sendero Camino de cruces",
                 "Sendero el Pescador",
                 "Sendero Búho de Anteojos",

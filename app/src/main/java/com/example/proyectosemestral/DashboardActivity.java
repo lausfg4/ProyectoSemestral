@@ -1,9 +1,12 @@
 package com.example.proyectosemestral;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +20,26 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.android.volley.VolleyError;
+import com.android.volley.AuthFailureError;
+import android.net.Uri;
+import android.os.Environment;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
+import android.content.Intent;
+import android.widget.Toast;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -45,11 +59,6 @@ public class DashboardActivity extends AppCompatActivity {
         btnEncuesta = findViewById(R.id.btnEncuesta);
         btnDashboard = findViewById(R.id.btnDashboard);
 
-        // Estadísticas superiores
-        TextView txtVisitantesHoy = findViewById(R.id.txtVisitantesHoy);
-        TextView txtEncuestaPromedio = findViewById(R.id.txtEncuestaPromedio);
-        TextView txtEncuestaCompletadas = findViewById(R.id.txtEncuestaCompletadas);
-
         // Navegación de botones
         btnRegistro.setOnClickListener(v -> startActivity(new Intent(this, RegistroActivity.class)));
         btnEncuesta.setOnClickListener(v -> startActivity(new Intent(this, EncuestaActivity.class)));
@@ -57,7 +66,157 @@ public class DashboardActivity extends AppCompatActivity {
             // Ya estamos en Dashboard
         });
 
-        // -------------------------
+        // Cargar datos del dashboard
+        cargarDatosDashboard();
+
+        Button btnGenerarReporte = findViewById(R.id.btnReporte);
+        btnGenerarReporte.setOnClickListener(v -> descargarReporteExcel());
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refrescar datos cuando se regresa al dashboard
+        cargarDatosDashboard();
+    }
+
+    private void descargarReporteExcel() {
+        String url = "https://camino-cruces-backend-production.up.railway.app/api/reporte-excel/";
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+
+        request.setTitle("Reporte Excel");
+        request.setDescription("Descargando reporte de visitas...");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "reporte_visitas.xlsx");
+
+        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        if (manager != null) {
+            manager.enqueue(request);
+
+            // Mostrar mensaje indicando que se inició la descarga
+            Toast.makeText(this, "📥 Descarga iniciada: revisa la carpeta Descargas", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "❌ No se pudo iniciar la descarga", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void cargarDatosDashboard() {
+        TextView txtVisitantesHoy = findViewById(R.id.txtVisitantesHoy);
+        TextView txtEncuestaCompletadas = findViewById(R.id.txtEncuestaCompletadas);
+
+        cargarEncuestasHoy(txtEncuestaCompletadas);
+        cargarVisitantesHoy(txtVisitantesHoy);
+        cargarVisitantesPorPais();
+        cargarVisitantesPorSendero();
+        cargarCalificacionPromedio();
+        cargarVisitasRecientes();
+    }
+
+    private void cargarEncuestasHoy(TextView txtEncuestaCompletadas) {
+        String urlEncuestas = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/encuestas-hoy/";
+        RequestQueue queueEncuestas = Volley.newRequestQueue(this);
+
+        Log.d("DashboardActivity", "🔍 Cargando encuestas hoy desde: " + urlEncuestas);
+
+        JsonObjectRequest requestEncuestas = new JsonObjectRequest(
+                Request.Method.GET, urlEncuestas, null,
+                response -> {
+                    try {
+                        Log.d("DashboardActivity", "✅ Respuesta encuestas hoy: " + response.toString());
+                        int cantidad = response.getInt("encuestas_hoy");
+                        Log.d("DashboardActivity", "📊 Encuestas hoy: " + cantidad);
+                        txtEncuestaCompletadas.setText(String.valueOf(cantidad));
+                    } catch (JSONException e) {
+                        Log.e("DashboardActivity", "❌ Error parseando encuestas hoy: " + e.getMessage());
+                        txtEncuestaCompletadas.setText("Error");
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Log.e("DashboardActivity", "❌ Error cargando encuestas hoy: " + error.toString());
+                    if (error.networkResponse != null) {
+                        Log.e("DashboardActivity", "Código error encuestas: " + error.networkResponse.statusCode);
+                        if (error.networkResponse.data != null) {
+                            Log.e("DashboardActivity", "Error body encuestas: " + new String(error.networkResponse.data));
+                        }
+                    }
+                    txtEncuestaCompletadas.setText("Error");
+                    error.printStackTrace();
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
+
+        // Configurar timeout
+        requestEncuestas.setRetryPolicy(new com.android.volley.DefaultRetryPolicy(
+                15000, // 15 segundos timeout
+                1, // 1 retry
+                com.android.volley.DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queueEncuestas.add(requestEncuestas);
+    }
+
+    private void cargarVisitantesHoy(TextView txtVisitantesHoy) {
+        String urlVisitantesHoy = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/visitantes-hoy/";
+        RequestQueue queueVisitantes = Volley.newRequestQueue(this);
+
+        JsonObjectRequest requestVisitantes = new JsonObjectRequest(
+                Request.Method.GET, urlVisitantesHoy, null,
+                response -> {
+                    try {
+                        // Verificar que la respuesta contenga el campo esperado
+                        if (!response.has("visitantes_hoy")) {
+                            txtVisitantesHoy.setText("Error");
+                            return;
+                        }
+
+                        int cantidad = response.getInt("visitantes_hoy");
+                        txtVisitantesHoy.setText(String.valueOf(cantidad));
+
+                    } catch (JSONException e) {
+                        txtVisitantesHoy.setText("Error");
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    if (error.networkResponse != null) {
+                        int statusCode = error.networkResponse.statusCode;
+                        // Mostrar código de error en el UI para debugging
+                        txtVisitantesHoy.setText("E" + statusCode);
+                    } else {
+                        txtVisitantesHoy.setText("Red");
+                    }
+                    error.printStackTrace();
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
+
+        // Configurar timeout más largo
+        requestVisitantes.setRetryPolicy(new com.android.volley.DefaultRetryPolicy(
+                20000, // 20 segundos timeout
+                2, // 2 retries
+                com.android.volley.DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queueVisitantes.add(requestVisitantes);
+    }
+
+    private void cargarVisitantesPorPais() {
         LinearLayout layoutPaises = findViewById(R.id.layoutPaises);
         TextView verTodoPais = findViewById(R.id.verTodoPais);
         int cantidadVisible = 5;
@@ -69,6 +228,9 @@ public class DashboardActivity extends AppCompatActivity {
                 Request.Method.GET, urlPaises, null,
                 response -> {
                     try {
+                        // Limpiar layout antes de agregar nuevos datos
+                        layoutPaises.removeAllViews();
+
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject obj = response.getJSONObject(i);
                             String paisNombre = obj.getString("pais");
@@ -101,27 +263,29 @@ public class DashboardActivity extends AppCompatActivity {
                             layoutPaises.addView(fila);
                         }
 
-                        verTodoPais.setOnClickListener(v -> {
-                            for (int i = cantidadVisible; i < layoutPaises.getChildCount(); i++) {
-                                layoutPaises.getChildAt(i).setVisibility(View.VISIBLE);
-                            }
+                        if (response.length() > cantidadVisible) {
+                            verTodoPais.setVisibility(View.VISIBLE);
+                            verTodoPais.setOnClickListener(v -> {
+                                for (int i = cantidadVisible; i < layoutPaises.getChildCount(); i++) {
+                                    layoutPaises.getChildAt(i).setVisibility(View.VISIBLE);
+                                }
+                                verTodoPais.setVisibility(View.GONE);
+                            });
+                        } else {
                             verTodoPais.setVisibility(View.GONE);
-                        });
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
-                error -> {
-                    error.printStackTrace();
-                }
+                error -> error.printStackTrace()
         );
 
         queue.add(requestPaises);
+    }
 
-        // -------------------------
-        // Gráfico: Visitantes por sendero
-        // -------------------------
+    private void cargarVisitantesPorSendero() {
         LinearLayout layoutSenderos = findViewById(R.id.layoutSenderos);
         String urlSenderos = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/visitantes-por-sendero/";
 
@@ -131,6 +295,17 @@ public class DashboardActivity extends AppCompatActivity {
                 Request.Method.GET, urlSenderos, null,
                 response -> {
                     try {
+                        // Limpiar layout antes de agregar nuevos datos
+                        layoutSenderos.removeAllViews();
+
+                        if (response.length() == 0) {
+                            TextView noData = new TextView(this);
+                            noData.setText("No hay datos de senderos");
+                            noData.setTextColor(Color.GRAY);
+                            layoutSenderos.addView(noData);
+                            return;
+                        }
+
                         int maxCantidad = 1;
                         for (int i = 0; i < response.length(); i++) {
                             int cantidad = response.getJSONObject(i).getInt("cantidad");
@@ -192,8 +367,153 @@ public class DashboardActivity extends AppCompatActivity {
         );
 
         queueSenderos.add(requestSenderos);
+    }
 
-        cargarVisitasRecientes();
+    private void cargarCalificacionPromedio() {
+        TextView txtCalificacionPromedio = findViewById(R.id.txtCalificacionPromedio);
+
+        // Mapeo: Nombres de senderos a IDs (ajusta según tu base de datos)
+        Map<String, Integer> senderoMap = new HashMap<>();
+        senderoMap.put("Sendero Camarón", 1);
+        senderoMap.put("Sendero Camino de Cruces", 2);
+
+        String urlSenderosVal = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/visitantes-por-sendero/";
+        RequestQueue queueVal = Volley.newRequestQueue(this);
+
+        JsonArrayRequest requestSenderosVal = new JsonArrayRequest(
+                Request.Method.GET, urlSenderosVal, null,
+                response -> {
+                    try {
+                        int totalSenderos = response.length();
+                        if (totalSenderos == 0) {
+                            txtCalificacionPromedio.setText("N/A");
+                            return;
+                        }
+
+                        final double[] sumaValoraciones = {0.0};
+                        final int[] totalComentarios = {0};
+                        final int[] senderosProcessed = {0};
+
+                        for (int i = 0; i < totalSenderos; i++) {
+                            JSONObject obj = response.getJSONObject(i);
+                            String nombreSendero = obj.getString("sendero");
+
+                            Integer senderoId = senderoMap.get(nombreSendero);
+
+                            if (senderoId == null) {
+                                senderosProcessed[0]++;
+                                if (senderosProcessed[0] == totalSenderos) {
+                                    finalizarCalculoComentarios(txtCalificacionPromedio, sumaValoraciones[0], totalComentarios[0]);
+                                }
+                                continue;
+                            }
+
+                            String urlComentarios = "https://camino-cruces-backend-production.up.railway.app/api/comentarios/sendero/" + senderoId + "/";
+
+                            JsonArrayRequest requestComentarios = new JsonArrayRequest(
+                                    Request.Method.GET, urlComentarios, null,
+                                    comentariosResponse -> {
+                                        try {
+                                            double sumaThisSendero = 0;
+                                            int countThisSendero = 0;
+
+                                            for (int j = 0; j < comentariosResponse.length(); j++) {
+                                                JSONObject comentario = comentariosResponse.getJSONObject(j);
+                                                if (comentario.has("valoracion")) {
+                                                    int valoracion = comentario.getInt("valoracion");
+                                                    if (valoracion > 0) {
+                                                        sumaThisSendero += valoracion;
+                                                        countThisSendero++;
+                                                    }
+                                                }
+                                            }
+
+                                            if (countThisSendero > 0) {
+                                                sumaValoraciones[0] += sumaThisSendero;
+                                                totalComentarios[0] += countThisSendero;
+                                            }
+
+                                            senderosProcessed[0]++;
+
+                                            if (senderosProcessed[0] == totalSenderos) {
+                                                finalizarCalculoComentarios(txtCalificacionPromedio, sumaValoraciones[0], totalComentarios[0]);
+                                            }
+
+                                        } catch (JSONException e) {
+                                            senderosProcessed[0]++;
+                                            if (senderosProcessed[0] == totalSenderos) {
+                                                finalizarCalculoComentarios(txtCalificacionPromedio, sumaValoraciones[0], totalComentarios[0]);
+                                            }
+                                        }
+                                    },
+                                    error -> {
+                                        senderosProcessed[0]++;
+                                        if (senderosProcessed[0] == totalSenderos) {
+                                            finalizarCalculoComentarios(txtCalificacionPromedio, sumaValoraciones[0], totalComentarios[0]);
+                                        }
+                                    }
+                            );
+
+                            queueVal.add(requestComentarios);
+                        }
+
+                    } catch (JSONException e) {
+                        txtCalificacionPromedio.setText("Error");
+                    }
+                },
+                error -> txtCalificacionPromedio.setText("Error")
+        );
+
+        queueVal.add(requestSenderosVal);
+    }
+
+    private void finalizarCalculoComentarios(TextView txtCalificacionPromedio, double sumaTotal, int totalValoraciones) {
+        if (totalValoraciones > 0) {
+            double promedioGeneral = sumaTotal / totalValoraciones;
+            txtCalificacionPromedio.setText(String.format(Locale.US, "%.1f/5", promedioGeneral));
+        } else {
+            txtCalificacionPromedio.setText("N/A");
+        }
+    }
+
+    private void cargarVisitasRecientes() {
+        String url = "https://camino-cruces-backend-production.up.railway.app/api/dashboard/visitas-recientes/";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        // Limpiar tabla antes de agregar nuevos datos
+                        TableLayout tableVisitantes = findViewById(R.id.tableVisitantes);
+                        // Mantener solo el header, remover las filas de datos
+                        if (tableVisitantes.getChildCount() > 1) {
+                            tableVisitantes.removeViews(1, tableVisitantes.getChildCount() - 1);
+                        }
+
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject visita = response.getJSONObject(i);
+
+                            String fecha = visita.optString("fecha", "N/A");
+                            String nombre = visita.optString("nombre", "N/A");
+                            int adulto = visita.optInt("adulto", 0);
+                            int nino = visita.optInt("nino", 0);
+                            String nacionalidad = visita.optString("nacionalidad", "N/A");
+                            String motivo = visita.optString("motivo_visita", "N/A");
+                            String sendero = visita.optString("sendero", "N/A");
+                            String hora = visita.optString("hora_entrada", "N/A");
+                            String telefono = visita.optString("telefono", "N/A");
+
+                            agregarVisitanteATabla(fecha, nombre, adulto, nino, nacionalidad, motivo, sendero, hora, telefono);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> error.printStackTrace()
+        );
+
+        queue.add(request);
     }
 
     private void agregarVisitanteATabla(String fecha, String nombre, int adultos, int ninos,
@@ -221,6 +541,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setText(texto);
         tv.setPadding(8, 0, 8, 0);
+        tv.setTextSize(12);
         return tv;
     }
 
@@ -242,40 +563,5 @@ public class DashboardActivity extends AppCompatActivity {
             alertDialog.dismiss();
             finishAffinity();
         });
-    }
-
-    private void cargarVisitasRecientes() {
-        String url = "https://camino-cruces-backend-production.up.railway.app/dashboard/visitas-recientes/";
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject visita = response.getJSONObject(i);
-
-                            String fecha = visita.getString("fecha");
-                            String nombre = visita.getString("nombre");
-                            int adulto = visita.getInt("adulto");
-                            int nino = visita.getInt("nino");
-                            String nacionalidad = visita.getString("nacionalidad");
-                            String motivo = visita.getString("motivo_visita");
-                            String sendero = visita.getString("sendero");
-                            String hora = visita.getString("hora_entrada");
-                            String telefono = visita.getString("telefono");
-
-                            agregarVisitanteATabla(fecha, nombre, adulto, nino, nacionalidad, motivo, sendero, hora, telefono);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> {
-                    error.printStackTrace();
-                }
-        );
-
-        queue.add(request);
     }
 }

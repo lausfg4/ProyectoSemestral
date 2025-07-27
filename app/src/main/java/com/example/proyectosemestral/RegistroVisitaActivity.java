@@ -30,9 +30,6 @@ public class RegistroVisitaActivity extends AppCompatActivity {
     private EditText etIdentificacion;
     private Button btnIngresar;
 
-    // Simulación de base de datos con cédula y nombre
-    private HashMap<String, String> baseUsuarios;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +42,6 @@ public class RegistroVisitaActivity extends AppCompatActivity {
         // Botón de regreso
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> onBackPressed());
-
-        // Inicializar base simulada
-        inicializarUsuarios();
 
         // Acción al presionar "Ingresar"
         btnIngresar.setOnClickListener(v -> {
@@ -64,21 +58,23 @@ public class RegistroVisitaActivity extends AppCompatActivity {
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     response -> {
-                        // Si la cédula existe, extraemos el nombre
+                        // Si la cédula existe, extraemos el nombre y la cédula
                         String nombreUsuario = response.optString("nombre_visitante", "Visitante");
+                        String cedulaPasaporte = response.optString("cedula_pasaporte", identificacion);
 
-                        // Enviar nombre e ID del visitante al siguiente Activity
+                        // Enviar datos del visitante a RegistroVisitaActivity2 para registrar nueva visita
                         Intent intent = new Intent(RegistroVisitaActivity.this, RegistroVisitaActivity2.class);
                         intent.putExtra("nombreUsuario", nombreUsuario);
-                        intent.putExtra("visitante_id", response.optInt("id")); // si lo necesitas más adelante
+                        intent.putExtra("cedula_pasaporte", cedulaPasaporte);
+                        intent.putExtra("visitante_id", response.optInt("id")); // Por si se necesita
                         startActivity(intent);
                     },
                     error -> {
+                        // Si no está registrado, enviarlo a registrarse primero
                         mostrarAlerta("¡No estás registrado!", R.drawable.exclamation, "Registrarse", () -> {
                             Intent intent = new Intent(RegistroVisitaActivity.this, RegistroActivity.class);
                             startActivity(intent);
                         });
-
                     });
 
             queue.add(request);
@@ -110,17 +106,6 @@ public class RegistroVisitaActivity extends AppCompatActivity {
         handler.postDelayed(runnable, delay);
     }
 
-    /**
-     * Inicializa una base de datos simulada de usuarios con cédula → nombre.
-     */
-    private void inicializarUsuarios() {
-        baseUsuarios = new HashMap<>();
-        baseUsuarios.put("8-123-456", "Juan Pérez");
-        baseUsuarios.put("4-789-012", "Ana Gómez");
-        baseUsuarios.put("3-456-789", "Carlos Ruiz");
-        // Puedes agregar más aquí
-    }
-
     private void mostrarAlerta(String mensaje, int icono, String textoBoton, Runnable onClick) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.alert_custom, null);
@@ -141,8 +126,5 @@ public class RegistroVisitaActivity extends AppCompatActivity {
             dialog.dismiss();
             if (onClick != null) onClick.run();
         });
-
     }
-
 }
-
