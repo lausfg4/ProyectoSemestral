@@ -1,11 +1,17 @@
 package com.example.proyectosemestral;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,29 +23,35 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.android.volley.AuthFailureError;
-import android.net.Uri;
-import android.os.Environment;
-import android.webkit.MimeTypeMap;
-import android.webkit.URLUtil;
-import android.content.Intent;
-import android.widget.Toast;
 
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request.Builder; // Se usa explícitamente con okhttp3.Request.Builder()
+import okhttp3.Response;
+
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -70,7 +82,10 @@ public class DashboardActivity extends AppCompatActivity {
         cargarDatosDashboard();
 
         Button btnGenerarReporte = findViewById(R.id.btnReporte);
-        btnGenerarReporte.setOnClickListener(v -> descargarReporteExcel());
+        btnGenerarReporte.setOnClickListener(view -> {
+            descargarReporte();
+        });
+
 
 
     }
@@ -82,25 +97,30 @@ public class DashboardActivity extends AppCompatActivity {
         cargarDatosDashboard();
     }
 
-    private void descargarReporteExcel() {
-        String url = "https://camino-cruces-backend-production.up.railway.app/api/reporte-excel/";
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
-        request.setTitle("Reporte Excel");
-        request.setDescription("Descargando reporte de visitas...");
+
+
+    private void descargarReporte() {
+        String url = "https://camino-cruces-backend-production.up.railway.app/api/reporte-excel/";
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setTitle("Reporte Completo");
+        request.setDescription("Descargando reporte Excel...");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "reporte_visitas.xlsx");
+
+        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss", java.util.Locale.US)
+                .format(new java.util.Date());
+        String fileName = "reporte_completo_" + timestamp + ".xlsx";
+
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        request.setMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        if (manager != null) {
-            manager.enqueue(request);
+        manager.enqueue(request);
 
-            // Mostrar mensaje indicando que se inició la descarga
-            Toast.makeText(this, "📥 Descarga iniciada: revisa la carpeta Descargas", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "❌ No se pudo iniciar la descarga", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this, "📥 Descarga iniciada: " + fileName, Toast.LENGTH_SHORT).show();
     }
+
 
 
     private void cargarDatosDashboard() {
@@ -564,4 +584,22 @@ public class DashboardActivity extends AppCompatActivity {
             finishAffinity();
         });
     }
+
+    private boolean isNetworkAvailable() {
+        try {
+            ConnectivityManager connectivityManager =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            if (connectivityManager != null) {
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+            }
+            return false;
+        } catch (Exception e) {
+            Log.e("DashboardActivity", "Error verificando conectividad: " + e.getMessage());
+            return true; // Asumir conexión disponible si hay error
+        }
+    }
+
+
 }
