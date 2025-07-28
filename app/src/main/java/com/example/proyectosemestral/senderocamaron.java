@@ -1,6 +1,7 @@
 package com.example.proyectosemestral;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,28 +27,38 @@ import java.util.Locale;
 public class senderocamaron extends AppCompatActivity {
 
     private Button btnComentar;
+    private int usuarioId; // ✅ Se inicializa después con SharedPreferences
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_senderocamaron);
 
+        // ✅ Obtener el ID del usuario desde sesión
+        SharedPreferences preferences = getSharedPreferences("sesion_usuario", MODE_PRIVATE);
+        usuarioId = preferences.getInt("usuario_id", -1);
+
+        if (usuarioId == -1) {
+            Toast.makeText(this, "❌ Sesión no iniciada. Vuelve a iniciar sesión.", Toast.LENGTH_LONG).show();
+            finish(); // Cierra si no hay usuario
+            return;
+        }
 
         btnComentar = findViewById(R.id.btn_comentar);
         btnComentar.setOnClickListener(v -> {
             Intent intent = new Intent(this, SenderoComentarios.class);
-            intent.putExtra("sendero_id", 1); // ID del sendero El Pescador
+            intent.putExtra("sendero_id", 1); // ID del sendero Camarón
             intent.putExtra("sendero_nombre", "Sendero Camarón");
+            intent.putExtra("usuario_id", usuarioId); // ✅ Usuario real (NO uses RESULT_OK)
             startActivity(intent);
-
         });
-
 
         obtenerResenas();
     }
 
     private void obtenerResenas() {
-        int senderoId = getIntent().getIntExtra("sendero_id", -1);
+        int senderoId = 1; // O usa getIntent si llega por otro Intent
         String url = "https://camino-cruces-backend-production.up.railway.app/api/comentarios/sendero/" + senderoId + "/";
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -84,6 +95,8 @@ public class senderocamaron extends AppCompatActivity {
                             }
 
                             contenedor.addView(tarjeta);
+
+                            sumaValoracion += valoracion;
 
                         } catch (Exception e) {
                             e.printStackTrace();

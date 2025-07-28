@@ -1,6 +1,7 @@
 package com.example.proyectosemestral;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,13 +40,11 @@ public class IniciarSesion extends AppCompatActivity {
             return insets;
         });
 
-        // Referencias a los elementos
         btnIngresar = findViewById(R.id.btnRegistrarse2);
         linkText3 = findViewById(R.id.linkText3);
-        etCorreo = findViewById(R.id.editTextCorreo2);         // Asegúrate que estos IDs existan en tu XML
-        etContrasena = findViewById(R.id.editTextContraseña2); // Asegúrate que estos IDs existan en tu XML
+        etCorreo = findViewById(R.id.editTextCorreo2);
+        etContrasena = findViewById(R.id.editTextContraseña2);
 
-        // Acción al pulsar "Ingresar"
         btnIngresar.setOnClickListener(view -> {
             String correo = etCorreo.getText().toString().trim();
             String contrasena = etContrasena.getText().toString().trim();
@@ -80,7 +79,17 @@ public class IniciarSesion extends AppCompatActivity {
 
                             Toast.makeText(this, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
 
-                            // Redirigir a Dashboard (Admin o User según rol)
+                            // ✅ Guardar datos de sesión con SharedPreferences
+                            SharedPreferences prefs = getSharedPreferences("sesion_usuario", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putInt("usuario_id", id);
+                            editor.putString("nombre", nombre);
+                            editor.putString("apellido", apellido);
+                            editor.putString("rol", rol);
+                            editor.putString("token", token);
+                            editor.apply();
+
+                            // Redirigir a la pantalla correspondiente
                             Intent intent;
                             if (rol.equalsIgnoreCase("ADMIN")) {
                                 intent = new Intent(this, DashboardActivity.class);
@@ -88,9 +97,6 @@ public class IniciarSesion extends AppCompatActivity {
                                 intent = new Intent(this, Inicio.class);
                             }
 
-                            intent.putExtra("token", token);
-                            intent.putExtra("usuario_id", id);
-                            intent.putExtra("rol", rol);
                             startActivity(intent);
                             finish();
 
@@ -110,7 +116,6 @@ public class IniciarSesion extends AppCompatActivity {
             queue.add(request);
         });
 
-        // Acción al pulsar "Crea una"
         linkText3.setOnClickListener(view -> {
             Intent intent = new Intent(this, Registrarse.class);
             startActivity(intent);
