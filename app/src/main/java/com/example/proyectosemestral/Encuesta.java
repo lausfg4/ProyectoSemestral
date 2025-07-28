@@ -160,6 +160,13 @@ public class Encuesta extends AppCompatActivity {
                 return;
             }
 
+            // Validar selección en los Spinners
+            if (spinnerSeleccionInvalida(spinnerActividades) || spinnerSeleccionInvalida(spinnerExAps)) {
+                mostrarAlerta("Por favor seleccione una opción válida en los campos de actividades", R.drawable.exclamation, "Volver", null);
+                return;
+            }
+
+
             // Validar que tenemos ID válido
             if (idVisita == -1) {
                 String debugInfo = "Debug Info:\n" +
@@ -179,21 +186,14 @@ public class Encuesta extends AppCompatActivity {
         });
     }
 
+    private boolean spinnerSeleccionInvalida(Spinner spinner) {
+        String seleccion = spinner.getSelectedItem().toString();
+        return seleccion.equals("Selecione una opción");
+    }
+
     private void obtenerDatosDelIntent() {
         Intent intent = getIntent();
 
-        // DEBUG: Imprimir TODOS los extras del Intent
-        Log.d(TAG, "========== DEBUG: EXTRAS DEL INTENT ==========");
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            for (String key : extras.keySet()) {
-                Object value = extras.get(key);
-                Log.d(TAG, "Extra - " + key + ": " + value + " (tipo: " + (value != null ? value.getClass().getSimpleName() : "null") + ")");
-            }
-        } else {
-            Log.d(TAG, "❌ No hay extras en el Intent");
-        }
-        Log.d(TAG, "===============================================");
 
         // Obtener ID de visita
         idVisita = intent.getIntExtra("id_visita", -1);
