@@ -27,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class Senderos extends AppCompatActivity {
 
     private LinearLayout senderosContainer;
@@ -81,7 +83,6 @@ public class Senderos extends AppCompatActivity {
                 String dificultad = sendero.getString("dificultad");
                 String descripcion = "Distancia: " + distancia + " km\nDificultad: " + dificultad;
 
-
                 View card = inflater.inflate(R.layout.sendero_card, senderosContainer, false);
 
                 ImageView imageView = card.findViewById(R.id.sendero_image);
@@ -97,8 +98,13 @@ public class Senderos extends AppCompatActivity {
 
                 nombreView.setText(nombre);
                 detallesView.setText(descripcion);
+
+                // Inicializar con valores por defecto mientras se cargan las valoraciones
                 ratingBar.setRating(0f);
-                resenasView.setText(""); // opcional
+                resenasView.setText("Cargando...");
+
+                // CARGAR VALORACIONES DEL SENDERO
+                cargarValoracionesSendero(id, ratingBar, resenasView);
 
                 verMasView.setOnClickListener(v -> {
                     Intent intent = null;
@@ -125,8 +131,6 @@ public class Senderos extends AppCompatActivity {
                     }
                 });
 
-
-
                 senderosContainer.addView(card);
 
             } catch (Exception e) {
@@ -135,15 +139,93 @@ public class Senderos extends AppCompatActivity {
         }
     }
 
+    // NUEVO MÉTODO: Cargar valoraciones de un sendero específico
+    private void cargarValoracionesSendero(int senderoId, RatingBar ratingBar, TextView resenasView) {
+        String url = "https://camino-cruces-backend-production.up.railway.app/api/comentarios/sendero/" + senderoId + "/";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        double sumaValoracion = 0;
+                        int cantidadResenas = response.length();
+
+                        // Calcular promedio de valoraciones
+                        for (int i = 0; i < cantidadResenas; i++) {
+                            JSONObject comentario = response.getJSONObject(i);
+                            double valoracion = comentario.getDouble("valoracion");
+                            sumaValoracion += valoracion;
+                        }
+
+                        if (cantidadResenas > 0) {
+                            double promedioValoracion = sumaValoracion / cantidadResenas;
+
+                            // Actualizar RatingBar con el promedio
+                            ratingBar.setRating((float) promedioValoracion);
+
+                            // Actualizar texto de reseñas
+                            resenasView.setText(String.format(Locale.US, "%.1f (%d reseñas)",
+                                    promedioValoracion, cantidadResenas));
+                        } else {
+                            // Sin reseñas
+                            ratingBar.setRating(0f);
+                            resenasView.setText("Sin reseñas");
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        // En caso de error, mostrar valores por defecto
+                        ratingBar.setRating(0f);
+                        resenasView.setText("Error al cargar");
+                    }
+                },
+                error -> {
+                    // En caso de error de red
+                    ratingBar.setRating(0f);
+                    resenasView.setText("Sin conexión");
+                }
+        );
+
+        queue.add(request);
+    }
+
     // Devuelve imagen local según el nombre del sendero
     private int obtenerImagenPorNombre(String nombre) {
-        nombre = nombre.toLowerCase();
-        if (nombre.contains("camaron")) return R.drawable.senderoscamaron;
-        if (nombre.contains("cruces")) return R.drawable.senderoscaminocruces;
-        if (nombre.contains("ciclovia")) return R.drawable.senderosciclovia;
-        if (nombre.contains("pescador")) return R.drawable.senderoselpescador;
-        if (nombre.contains("buho")) return R.drawable.senderosbuhodeanteojos;
-        return R.drawable.logo; // imagen por defecto
+        String nombreLower = nombre.toLowerCase();
+
+        // Debug: Ver qué nombre está recibiendo
+        android.util.Log.d("Senderos", "Buscando imagen para: '" + nombre + "' (lower: '" + nombreLower + "')");
+
+        // Búsquedas más específicas y con más variaciones
+        if (nombreLower.contains("camarón") || nombreLower.contains("camaron")) {
+            android.util.Log.d("Senderos", "Usando imagen: senderoscamaron");
+            return R.drawable.senderoscamaron;
+        }
+
+        if (nombreLower.contains("cruces") || nombreLower.contains("camino de cruces")) {
+            android.util.Log.d("Senderos", "Usando imagen: senderoscaminocruces");
+            return R.drawable.senderoscaminocruces;
+        }
+
+        if (nombreLower.contains("ciclovía") || nombreLower.contains("ciclovia")) {
+            android.util.Log.d("Senderos", "Usando imagen: senderosciclovia");
+            return R.drawable.senderosciclovia;
+        }
+
+        if (nombreLower.contains("pescador") || nombreLower.contains("el pescador")) {
+            android.util.Log.d("Senderos", "Usando imagen: senderoselpescador");
+            return R.drawable.senderoselpescador;
+        }
+
+        if (nombreLower.contains("búho") || nombreLower.contains("buho") ||
+                nombreLower.contains("anteojos") || nombreLower.contains("búho de anteojos")) {
+            android.util.Log.d("Senderos", "Usando imagen: senderosbuhodeanteojos");
+            return R.drawable.senderosbuhodeanteojos;
+        }
+
+        // Si no encuentra ninguna coincidencia
+        android.util.Log.w("Senderos", "No se encontró imagen específica para: " + nombre + " - usando logo por defecto");
+        return R.drawable.logo;
     }
 
     private void mostrarDialogoSalir() {

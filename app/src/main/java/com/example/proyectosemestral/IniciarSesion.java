@@ -1,6 +1,7 @@
 package com.example.proyectosemestral;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,7 @@ public class IniciarSesion extends AppCompatActivity {
         // Acción al pulsar "Ingresar"
         btnIngresar.setOnClickListener(view -> {
             String correo = etCorreo.getText().toString().trim();
-            String contrasena = etContrasena.getText().toString().trim();
+            String contrasena = etContrasena.getText().toString().trim().toLowerCase();
 
             if (correo.isEmpty() || contrasena.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
@@ -77,6 +78,16 @@ public class IniciarSesion extends AppCompatActivity {
                             String apellido = response.getString("apellido");
                             String rol = response.getString("rol");
                             int id = response.getInt("id");
+
+                            // Guardar datos del usuario en SharedPreferences
+                            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("usuario_id", String.valueOf(id));
+                            editor.putString("token", token);
+                            editor.putString("nombre", nombre);
+                            editor.putString("apellido", apellido);
+                            editor.putString("rol", rol);
+                            editor.apply();
 
                             Toast.makeText(this, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
 

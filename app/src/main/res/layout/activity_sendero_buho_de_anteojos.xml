@@ -78,7 +78,7 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="188dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/senderito"
                     android:scaleType="fitXY" />
             </LinearLayout>
 

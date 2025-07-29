@@ -54,7 +54,7 @@ public class Registrarse extends AppCompatActivity {
         btnRegistrarse.setOnClickListener(view -> {
             String nombre = editTextNombre.getText().toString().trim();
             String apellido = editTextApellido.getText().toString().trim();
-            String correo = editTextCorreo.getText().toString().trim();
+            String correo = editTextCorreo.getText().toString().trim().toLowerCase();
             String contraseña = editTextContraseña.getText().toString().trim();
             String confirmarContraseña = editTextConfirmarContraseña.getText().toString().trim();
 

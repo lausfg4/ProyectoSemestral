@@ -46,6 +46,12 @@ public class senderoElPescador extends AppCompatActivity {
         obtenerResenas();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        obtenerResenas(); // Recarga comentarios cada vez que regresas
+    }
+
     private void obtenerResenas() {
         int senderoId = getIntent().getIntExtra("sendero_id", -1);
         String url = "https://camino-cruces-backend-production.up.railway.app/api/comentarios/sendero/" + senderoId + "/";
@@ -68,20 +74,21 @@ public class senderoElPescador extends AppCompatActivity {
                             String fotoUrl = obj.optString("foto_comentario", "");
                             String nombreUsuario = obj.optString("usuario", "Anónimo");
 
+                            // AGREGAR ESTA LÍNEA - Sumar la valoración al total
+                            sumaValoracion += valoracion;
+
                             View tarjeta = getLayoutInflater().inflate(R.layout.item_resena, null);
 
                             TextView txtComentario = tarjeta.findViewById(R.id.txt_comentario);
                             TextView txtNombreUsuario = tarjeta.findViewById(R.id.txt_nombre_usuario);
                             RatingBar rating = tarjeta.findViewById(R.id.rating_usuario);
-                            ImageView imgFoto = tarjeta.findViewById(R.id.img_foto_resena);
+
 
                             txtComentario.setText(comentario);
                             txtNombreUsuario.setText(nombreUsuario);
                             rating.setRating((float) valoracion);
 
-                            if (!fotoUrl.isEmpty()) {
-                                Picasso.get().load(fotoUrl).into(imgFoto);
-                            }
+
 
                             contenedor.addView(tarjeta);
 

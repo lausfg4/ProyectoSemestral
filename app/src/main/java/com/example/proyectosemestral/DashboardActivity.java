@@ -585,21 +585,4 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isNetworkAvailable() {
-        try {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            if (connectivityManager != null) {
-                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-            }
-            return false;
-        } catch (Exception e) {
-            Log.e("DashboardActivity", "Error verificando conectividad: " + e.getMessage());
-            return true; // Asumir conexión disponible si hay error
-        }
-    }
-
-
 }
